@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApplyFast AI — Universal Job &amp; Online Form Auto-Filler</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top, #172554, #070b14 75%);
+      color: #f8fafc;
+      line-height: 1.65;
+      padding: 24px 16px;
+    }
+    .container { max-width: 980px; margin: 0 auto; }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
+    .brand-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff; font-size: 15px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
+    }
+    .nav-links a { color: #cbd5e1; text-decoration: none; margin-left: 18px; font-size: 14px; }
+    .nav-links a:hover { color: #38bdf8; }
+    .hero {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      padding: 40px 28px;
+      text-align: center;
+      margin-bottom: 28px;
+      backdrop-filter: blur(12px);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.14);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    h1 { font-size: 34px; line-height: 1.25; margin-bottom: 12px; }
+    p.sub { color: #cbd5e1; max-width: 700px; margin: 0 auto 22px; font-size: 15px; }
+    .cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: 11px 22px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-outline {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+    .section-title { font-size: 22px; margin: 30px 0 14px; color: #fff; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+    .card {
+      background: rgba(15, 23, 42, 0.76);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 16px;
+      padding: 22px;
+    }
+    .card h3 { margin-bottom: 8px; color: #fff; font-size: 17px; }
+    .card p, .card li { color: #cbd5e1; font-size: 14px; }
+    .card ul { padding-left: 18px; margin-top: 8px; }
+    .price { font-size: 28px; font-weight: 700; color: #38bdf8; margin: 10px 0; }
+    .tag-best {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.16);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    .preview-box {
+      background: rgba(15, 23, 42, 0.76);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      align-items: center;
+    }
+    .mock-ui {
+      background: #0f172a;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 13px;
+    }
+    .mock-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: rgba(30, 41, 59, 0.75);
+      border-radius: 8px;
+      margin-top: 8px;
+      color: #e2e8f0;
+    }
+    .policy-box {
+      background: rgba(15, 23, 42, 0.74);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 16px;
+      padding: 26px;
+      margin-bottom: 22px;
+      font-size: 13.5px;
+      color: #cbd5e1;
+    }
+    .policy-box h3 { color: #fff; margin: 18px 0 6px; font-size: 16px; }
+    .policy-box h3:first-child { margin-top: 0; }
+    footer {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 13px;
+      padding: 20px 0 10px;
+      border-top: 1px solid rgba(148, 163, 184, 0.16);
+      margin-top: 26px;
+    }
+    a.link { color: #38bdf8; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand">
+        <div class="brand-icon">AF</div>
+        <span>ApplyFast AI</span>
+      </div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#preview">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#policies">Legal &amp; Privacy</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="badge">Chrome Browser Extension • Productivity &amp; Form Auto-Fill Tool</div>
+      <h1>Auto-Fill Job Applications &amp; Online Forms in Seconds</h1>
+      <p class="sub">
+        ApplyFast AI helps job seekers and online service centre operators save applicant profiles once or extract key details from a resume (PDF/DOCX) to populate repetitive web forms smoothly—reducing manual typing and errors.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="#pricing">View Pro Plans</a>
+        <a class="btn btn-outline" href="#preview">See Extension Preview</a>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="features">Who It Is Built For</h2>
+    <section class="grid">
+      <div class="card">
+        <h3>1. Job Seekers &amp; Applicants</h3>
+        <p>Speed up repetitive applications across LinkedIn, Greenhouse, Ashby, Workday, and company career portals.</p>
+        <ul>
+          <li>Local resume upload (PDF/DOCX) &amp; field extraction</li>
+          <li>Saves name, email, phone, LinkedIn, GitHub &amp; portfolio</li>
+          <li>Populates salary expectations, notice period &amp; cover letter</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>2. Online &amp; Service Centre Operators</h3>
+        <p>Built for digital service centres handling high-volume registrations and citizen/student portal forms.</p>
+        <ul>
+          <li>Store and switch between saved applicant profiles</li>
+          <li>Quick-fill common contact, identity &amp; address fields</li>
+          <li>Cuts down repetitive data-entry time on web portals</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>3. Free Trial &amp; Instant License Activation</h3>
+        <p>Try ApplyFast AI on real forms first with 10 free auto-fills before choosing a paid subscription.</p>
+        <ul>
+          <li>10 lifetime free form auto-fills included</li>
+          <li>Automated license key delivery via email after payment</li>
+          <li>One-click Pro activation inside the extension popup</li>
+        </ul>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="preview">How ApplyFast AI Works</h2>
+    <section class="preview-box">
+      <div>
+        <h3 style="font-size:18px; margin-bottom:8px;">Clean 3-Step Workflow</h3>
+        <p style="color:#cbd5e1; font-size:14px; margin-bottom:10px;">
+          1. Open the ApplyFast AI Chrome extension popup and upload a resume or enter applicant details once.<br />
+          2. Open any supported job application or online registration form.<br />
+          3. Click <strong>Auto-fill this page</strong> to populate matching fields automatically.
+        </p>
+        <p style="color:#94a3b8; font-size:13px;">
+          Note: All profile data stays in your browser storage unless you choose to clear it.
+        </p>
+      </div>
+      <div class="mock-ui">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong>⚡ ApplyFast AI</strong>
+          <span style="background:rgba(56,189,248,0.2);color:#38bdf8;padding:2px 8px;border-radius:999px;font-size:11px;">Free (10/10)</span>
+        </div>
+        <div class="mock-row"><span>📄 Resume (PDF/DOCX)</span><span style="color:#38bdf8;">Parsed Locally</span></div>
+        <div class="mock-row"><span>👤 Applicant Profile</span><span style="color:#34d399;">Saved</span></div>
+        <div class="mock-row"><span>🔑 Pro License Key</span><span style="color:#cbd5e1;">Instant Unlock</span></div>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="pricing">Simple, Transparent Pricing</h2>
+    <section class="grid">
+      <div class="card">
+        <h3>Free Starter</h3>
+        <div class="price">₹0 / $0</div>
+        <p>Evaluate ApplyFast AI on your everyday forms.</p>
+        <ul>
+          <li>Up to 10 free form auto-fills</li>
+          <li>Local profile storage &amp; resume parsing</li>
+          <li>No credit card required</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Pro Monthly</h3>
+        <div class="price">₹149 / $2 <span style="font-size:13px;color:#94a3b8;">/ month</span></div>
+        <p>Unlimited auto-fills for active job searches or daily centre work.</p>
+        <ul>
+          <li>Unlimited form auto-fills</li>
+          <li>Supports UPI AutoPay, Indian &amp; International Cards</li>
+          <li>Auto-renews monthly; instant license key via email</li>
+        </ul>
+        <a class="btn" href="#contact">Get Monthly Plan</a>
+      </div>
+
+      <div class="card">
+        <div class="tag-best">BEST VALUE • SAVE ₹289 / $6</div>
+        <h3>Pro Yearly</h3>
+        <div class="price">₹1,499 / $18 <span style="font-size:13px;color:#94a3b8;">/ year</span></div>
+        <p>Full-year unlimited access for heavy form-filling workflows.</p>
+        <ul>
+          <li>Unlimited form auto-fills for 12 months</li>
+          <li>Supports Indian &amp; global payment methods</li>
+          <li>Auto-renews yearly; instant license key via email</li>
+        </ul>
+        <a class="btn" href="#contact">Get Yearly Plan</a>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="policies">Privacy Policy, Terms, Refund &amp; Copyright</h2>
+    <section class="policy-box">
+      <h3>1. Privacy Policy</h3>
+      <p>
+        ApplyFast AI ("we", "our", or "us") is committed to protecting user privacy. Applicant profile information (such as name, email, phone number, links, work history, and cover letter text) and uploaded resume files (PDF/DOCX) are processed locally on your device and saved inside Chrome's extension storage (<code>chrome.storage</code>) solely to auto-fill web forms when initiated by you. We do not sell, rent, or share your personal profile data or resume contents with third parties. When you activate a Pro license key, only the license key is transmitted over HTTPS to our authorized licensing provider to verify subscription validity.
+      </p>
+
+      <h3>2. Terms of Service &amp; Subscription Billing</h3>
+      <p>
+        ApplyFast AI is a digital productivity software tool distributed as a Google Chrome extension. By installing or purchasing a Pro subscription, you agree to use the extension only for lawful, authorized form submissions. Paid Pro plans are billed on a recurring monthly (₹149 / $2) or annual (₹1,499 / $18) schedule through our authorized payment processor and renew automatically unless cancelled prior to the next billing date. Upon successful payment, a unique license key is issued and delivered electronically to your registered email address.
+      </p>
+
+      <h3>3. Refund &amp; Cancellation Policy</h3>
+      <p>
+        Every user receives 10 free form auto-fills to test ApplyFast AI before purchasing a paid subscription. Because Pro plans provide immediate access to a digital software license key upon payment confirmation, completed digital subscription payments are non-refundable except where required by applicable law. You may cancel future recurring renewals at any time before your next renewal date via your billing management link or by emailing support.
+      </p>
+
+      <h3>4. Copyright &amp; Intellectual Property Notice</h3>
+      <p>
+        © 2026 ApplyFast AI (Owned &amp; Operated by Hiralal Ravidas). All rights reserved. The ApplyFast AI name, logo, user interface design, source code, and documentation are protected by applicable copyright and intellectual property laws. Unauthorized copying, redistribution, reverse engineering, or resale of this software or its license keys is strictly prohibited.
+      </p>
+
+      <h3 id="contact">5. Business &amp; Support Contact</h3>
+      <p>
+        <strong>Product Name:</strong> ApplyFast AI (Digital Software / Chrome Extension)<br />
+        <strong>Owner / Developer:</strong> Hiralal Ravidas<br />
+        <strong>Support &amp; Billing Email:</strong> <a class="link" href="mailto:hiralalravidas8252@gmail.com">hiralalravidas8252@gmail.com</a><br />
+        <strong>Location:</strong> Sahibganj, Jharkhand, India<br />
+        <strong>Support Response Time:</strong> Within 24–48 business hours
+      </p>
+    </section>
+
+    <footer>
+      © 2026 ApplyFast AI • Owned &amp; Operated by Hiralal Ravidas • <a class="link" href="#policies">Privacy Policy, Terms, Refund Policy &amp; Copyright</a>
+    </footer>
+  </div>
+</body>
+</html>
