@@ -27,11 +27,15 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
       min-height: 100vh;
       padding: 24px 16px 64px;
     }
@@ -184,6 +188,7 @@
       height: 100%;
       width: 100%;
       background: linear-gradient(90deg, #38bdf8, #3b82f6);
+      transition: width 0.25s ease;
     }
 
     .section-tag {
@@ -408,11 +413,84 @@
       display: none;
     }
 
-    .footer {
+    .faq-card {
+      background: rgba(14, 29, 61, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .faq-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .faq-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .faq-item {
+      background: rgba(9, 19, 42, 0.78);
+      border: 1px solid rgba(96, 165, 250, 0.22);
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .faq-q {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .policies-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    @media (max-width: 780px) {
+      .policies-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .policy-box {
       background: rgba(14, 29, 61, 0.85);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 16px 20px;
+      padding: 18px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .policy-box h3 {
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .policy-box a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    .footer {
+      background: rgba(14, 29, 61, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -422,10 +500,15 @@
       color: var(--muted);
     }
 
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
     .footer a {
       color: var(--cyan);
       text-decoration: none;
-      margin-left: 12px;
     }
   </style>
 </head>
@@ -575,80 +658,61 @@
       </aside>
     </div>
 
-    <footer class="footer">
-      <div>© 2026 ApplyFast AI • https://hiralalapplyfastai.github.io/applyfast-ai/</div>
-      <div>
-        <a href="#demo-workspace">Demo</a>
-        <a href="#pro-plans">Pricing</a>
-        <a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <section class="faq-card" id="faq">
+      <div class="section-tag">Frequently Asked Questions</div>
+      <h2 style="font-size: 20px;">Everything You Need to Know About ApplyFast AI</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">1. What is ApplyFast AI and how does it work?</div>
+          <div class="faq-a">
+            ApplyFast AI is a Chrome extension that helps job applicants auto-fill online application forms faster using resume parsing and saved personal/profile details. You can test the interactive workflow right here on this demo page.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">2. Which job boards and application portals are supported?</div>
+          <div class="faq-a">
+            Pro users get unlimited auto-fills across major hiring platforms including LinkedIn, Greenhouse, Ashby, Workday, and Lever, along with standard web application forms.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">3. Is my resume or personal data uploaded to any server?</div>
+          <div class="faq-a">
+            No. Resume reading and profile details are handled locally in the user’s browser/device without uploading resume files to external databases or selling user data.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">4. What is included in the Free tier vs. Pro plans?</div>
+          <div class="faq-a">
+            New users start with 10 free form auto-fills. Upgrading to Pro unlocks unlimited auto-fills at ₹149 / $2 per month or ₹1,499 / $18 per year (saving ₹289 / $6 annually).
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">5. How do I receive and activate my Pro license key?</div>
+          <div class="faq-a">
+            After payment completion, your Pro license key is sent to your email. Paste the key into the "Enter Pro License Key" box and click "Activate Pro" to unlock Pro features.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">6. What is the refund and cancellation policy?</div>
+          <div class="faq-a">
+            Because ApplyFast AI provides 10 free forms upfront and instant digital license delivery, all Pro purchases are final and non-refundable. Auto-renewals can be cancelled before the next billing date.
+          </div>
+        </div>
       </div>
-    </footer>
-  </div>
+    </section>
 
-  <script>
-    const DODO_MONTHLY_CHECKOUT_URL = "";
-    const DODO_YEARLY_CHECKOUT_URL = "";
+    <section class="policies-grid" id="legal">
+      <div class="policy-box" id="privacy">
+        <h3>Privacy Policy</h3>
+        <p>
+          ApplyFast AI processes resume files (PDF/DOCX) and saved applicant profile details locally in your browser. Your resume files and personal form data are never uploaded to external servers or sold to third parties. For Pro subscriptions, payment processing and license delivery are handled securely via our payment processor.
+        </p>
+      </div>
 
-    let freeLeft = 10;
-
-    function showToast(msg, targetId = "demoToast") {
-      const el = document.getElementById(targetId);
-      el.textContent = msg;
-      el.style.display = "block";
-    }
-
-    function fillSampleFields() {
-      if (!document.getElementById("firstName").value) document.getElementById("firstName").value = "Hiralal";
-      if (!document.getElementById("lastName").value) document.getElementById("lastName").value = "Ravidas";
-      if (!document.getElementById("email").value) document.getElementById("email").value = "demo@applyfast.ai";
-      if (!document.getElementById("phone").value) document.getElementById("phone").value = "+91 98765 43210";
-      if (!document.getElementById("location").value) document.getElementById("location").value = "Jharkhand, India";
-      if (!document.getElementById("linkedin").value) document.getElementById("linkedin").value = "https://linkedin.com/in/applyfast-demo";
-      if (!document.getElementById("portfolio").value) document.getElementById("portfolio").value = "https://github.com/hiralalapplyfastai";
-    }
-
-    function simulateResumeLoad() {
-      fillSampleFields();
-      showToast("Demo resume parsed locally on device (no file uploaded).");
-    }
-
-    function saveDemoProfile() {
-      fillSampleFields();
-      showToast("Profile details saved in this browser demo session.");
-    }
-
-    function runDemoAutofill() {
-      fillSampleFields();
-      if (freeLeft > 0) {
-        freeLeft -= 1;
-        document.getElementById("quotaText").textContent = `${freeLeft} / 10`;
-        document.getElementById("quotaBar").style.width = `${(freeLeft / 10) * 100}%`;
-      }
-      const name = `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`.trim();
-      const email = document.getElementById("email").value;
-      showToast(`Demo auto-fill completed for ${name} (${email}).`);
-    }
-
-    function handlePlanClick(planLabel) {
-      if (planLabel.includes("Monthly") && DODO_MONTHLY_CHECKOUT_URL) {
-        window.open(DODO_MONTHLY_CHECKOUT_URL, "_blank", "noopener,noreferrer");
-        return;
-      }
-      if (planLabel.includes("Yearly") && DODO_YEARLY_CHECKOUT_URL) {
-        window.open(DODO_YEARLY_CHECKOUT_URL, "_blank", "noopener,noreferrer");
-        return;
-      }
-      showToast(`${planLabel} selected in ApplyFast AI preview. Checkout link will open once payment setup is finalized.`, "proToast");
-    }
-
-    function activateDemoKey() {
-      const key = document.getElementById("licenseKey").value.trim();
-      if (!key) {
-        showToast("Please enter a Pro license key first.", "proToast");
-        return;
-      }
-      showToast(`License key "${key}" checked in demo preview.`, "proToast");
-    }
-  </script>
-</body>
-</html>
+      <div class="poli
