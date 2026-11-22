@@ -271,7 +271,7 @@
       margin-bottom: 4px;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 9px 11px;
       border-radius: 8px;
@@ -411,6 +411,17 @@
       border: 1px solid rgba(96, 165, 250, 0.4);
       color: #dbeafe;
       display: none;
+    }
+
+    .meta-list {
+      list-style: none;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .meta-list li {
+      margin-bottom: 6px;
     }
 
     .faq-card {
@@ -556,6 +567,15 @@
           <p class="local-note">Read on your device. Your file is never uploaded or stored.</p>
           <a class="tab-link" href="#demo-workspace" onclick="showToast('File picker preview runs directly in this demo tab.')">File picker closes the popup? Open in a tab</a>
 
+          <label for="targetPortal">Target Job Board Preview</label>
+          <select id="targetPortal">
+            <option value="LinkedIn">LinkedIn Easy Apply</option>
+            <option value="Greenhouse">Greenhouse</option>
+            <option value="Ashby">Ashby</option>
+            <option value="Workday">Workday</option>
+            <option value="Lever">Lever</option>
+          </select>
+
           <div class="section-tag" style="margin-top: 18px;">Personal Details</div>
           <div class="row-2">
             <div>
@@ -647,13 +667,15 @@
         </section>
 
         <section class="card">
-          <div class="section-tag">Product Info</div>
+          <div class="section-tag">Product &amp; Delivery Info</div>
           <p style="font-size: 13px; color: var(--muted);">
-            ApplyFast AI is a Chrome extension designed to help applicants fill job application forms quickly with local profile data and resume-assisted details.
+            ApplyFast AI is a digital browser extension utility that helps applicants fill job application forms quickly using local resume parsing and saved profile fields.
           </p>
-          <p style="font-size: 12px; color: var(--muted); margin-top: 8px;">
-            Website: <strong style="color: var(--text);">https://hiralalapplyfastai.github.io/applyfast-ai/</strong>
-          </p>
+          <ul class="meta-list">
+            <li><strong>Delivery:</strong> Digital software &amp; email license key (no physical shipping).</li>
+            <li><strong>Free Trial:</strong> 10 free form auto-fills included.</li>
+            <li><strong>Website:</strong> https://hiralalapplyfastai.github.io/applyfast-ai/</li>
+          </ul>
         </section>
       </aside>
     </div>
@@ -701,18 +723,4 @@
         <div class="faq-item">
           <div class="faq-q">6. What is the refund and cancellation policy?</div>
           <div class="faq-a">
-            Because ApplyFast AI provides 10 free forms upfront and instant digital license delivery, all Pro purchases are final and non-refundable. Auto-renewals can be cancelled before the next billing date.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="policies-grid" id="legal">
-      <div class="policy-box" id="privacy">
-        <h3>Privacy Policy</h3>
-        <p>
-          ApplyFast AI processes resume files (PDF/DOCX) and saved applicant profile details locally in your browser. Your resume files and personal form data are never uploaded to external servers or sold to third parties. For Pro subscriptions, payment processing and license delivery are handled securely via our payment processor.
-        </p>
-      </div>
-
-      <div class="poli
+            Because ApplyFast AI provides 10
