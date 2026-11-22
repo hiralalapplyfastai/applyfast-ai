@@ -3,311 +3,343 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ApplyFast AI — Universal Job &amp; Online Form Auto-Filler</title>
+  <title>ApplyFast AI — Chrome Extension & Live Demo</title>
+  <meta name="description" content="ApplyFast AI is an AI-powered Chrome extension in beta that helps auto-fill online application forms faster. Try the live web demo preview." />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b1120;
+      --card: #111827;
+      --card-2: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+      --accent: #38bdf8;
+      --green: #22c55e;
+      --green-dark: #052e16;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: radial-gradient(circle at top, #172554, #070b14 75%);
-      color: #f8fafc;
-      line-height: 1.65;
-      padding: 24px 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #172554 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 16px 60px;
     }
-    .container { max-width: 980px; margin: 0 auto; }
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0 24px;
-      flex-wrap: wrap;
-      gap: 12px;
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
     }
-    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
-    .brand-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; color: #fff; font-size: 15px;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
-    }
-    .nav-links a { color: #cbd5e1; text-decoration: none; margin-left: 18px; font-size: 14px; }
-    .nav-links a:hover { color: #38bdf8; }
-    .hero {
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(56, 189, 248, 0.28);
-      border-radius: 20px;
-      padding: 40px 28px;
-      text-align: center;
-      margin-bottom: 28px;
-      backdrop-filter: blur(12px);
-    }
+
     .badge {
       display: inline-block;
-      background: rgba(56, 189, 248, 0.14);
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      padding: 5px 14px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 5px 12px;
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       margin-bottom: 14px;
     }
-    h1 { font-size: 34px; line-height: 1.25; margin-bottom: 12px; }
-    p.sub { color: #cbd5e1; max-width: 700px; margin: 0 auto 22px; font-size: 15px; }
-    .cta-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+    .hero {
+      background: rgba(17, 24, 39, 0.88);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    .links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
     .btn {
       display: inline-block;
-      padding: 11px 22px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      color: #fff;
       text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 10px;
       font-weight: 600;
       font-size: 14px;
-      border: none;
       cursor: pointer;
+      border: none;
+      transition: 0.2s ease;
     }
-    .btn-outline {
-      background: rgba(30, 41, 59, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.35);
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--green-dark);
     }
-    .section-title { font-size: 22px; margin: 30px 0 14px; color: #fff; }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+    }
+
+    .btn-secondary {
+      background: var(--card-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
-      gap: 16px;
-      margin-bottom: 26px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      margin-bottom: 24px;
     }
+
+    @media (max-width: 780px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      h1 {
+        font-size: 26px;
+      }
+    }
+
     .card {
-      background: rgba(15, 23, 42, 0.76);
-      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 22px;
     }
-    .card h3 { margin-bottom: 8px; color: #fff; font-size: 17px; }
-    .card p, .card li { color: #cbd5e1; font-size: 14px; }
-    .card ul { padding-left: 18px; margin-top: 8px; }
-    .price { font-size: 28px; font-weight: 700; color: #38bdf8; margin: 10px 0; }
-    .tag-best {
-      display: inline-block;
-      background: rgba(16, 185, 129, 0.16);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 6px;
-      margin-bottom: 6px;
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
     }
-    .preview-box {
-      background: rgba(15, 23, 42, 0.76);
-      border: 1px solid rgba(56, 189, 248, 0.22);
-      border-radius: 18px;
-      padding: 24px;
-      margin-bottom: 26px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      align-items: center;
+
+    h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--accent);
     }
-    .mock-ui {
-      background: #0f172a;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 14px;
-      padding: 16px;
+
+    label {
+      display: block;
       font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+      margin-bottom: 4px;
     }
-    .mock-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 10px;
-      background: rgba(30, 41, 59, 0.75);
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
       border-radius: 8px;
-      margin-top: 8px;
-      color: #e2e8f0;
+      border: 1px solid var(--border);
+      background: #0f172a;
+      color: var(--text);
+      font-size: 14px;
     }
-    .policy-box {
-      background: rgba(15, 23, 42, 0.74);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      border-radius: 16px;
-      padding: 26px;
-      margin-bottom: 22px;
-      font-size: 13.5px;
-      color: #cbd5e1;
+
+    textarea {
+      min-height: 76px;
+      resize: vertical;
     }
-    .policy-box h3 { color: #fff; margin: 18px 0 6px; font-size: 16px; }
-    .policy-box h3:first-child { margin-top: 0; }
-    footer {
-      text-align: center;
-      color: #94a3b8;
+
+    .status-box {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      color: #86efac;
       font-size: 13px;
-      padding: 20px 0 10px;
-      border-top: 1px solid rgba(148, 163, 184, 0.16);
-      margin-top: 26px;
+      display: none;
     }
-    a.link { color: #38bdf8; text-decoration: none; }
+
+    ul {
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .plan-box {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 4px 0;
+    }
+
+    footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .legal-section {
+      margin-top: 20px;
+      background: rgba(17, 24, 39, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .legal-section p {
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <nav class="nav">
-      <div class="brand">
-        <div class="brand-icon">AF</div>
-        <span>ApplyFast AI</span>
-      </div>
-      <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#preview">How It Works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#policies">Legal &amp; Privacy</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </nav>
-
     <section class="hero">
-      <div class="badge">Chrome Browser Extension • Productivity &amp; Form Auto-Fill Tool</div>
-      <h1>Auto-Fill Job Applications &amp; Online Forms in Seconds</h1>
-      <p class="sub">
-        ApplyFast AI helps job seekers and online service centre operators save applicant profiles once or extract key details from a resume (PDF/DOCX) to populate repetitive web forms smoothly—reducing manual typing and errors.
+      <span class="badge">Beta Version • Chrome Extension Preview</span>
+      <h1>ApplyFast AI</h1>
+      <p class="subtitle">
+        ApplyFast AI is a Chrome extension currently in beta that helps users fill online application forms faster with smart profile fields and AI-assisted responses.
       </p>
-      <div class="cta-row">
-        <a class="btn" href="#pricing">View Pro Plans</a>
-        <a class="btn btn-outline" href="#preview">See Extension Preview</a>
+      <p style="font-size: 14px; color: var(--muted);">
+        Official Page: <strong style="color: var(--text);">https://hiralalapplyfastai.github.io/applyfast-ai/</strong>
+      </p>
+      <div class="links-row">
+        <a class="btn btn-primary" href="#demo-preview">Try Live Extension Demo</a>
+        <a class="btn btn-secondary" href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">View GitHub Repository</a>
       </div>
     </section>
 
-    <h2 class="section-title" id="features">Who It Is Built For</h2>
-    <section class="grid">
-      <div class="card">
-        <h3>1. Job Seekers &amp; Applicants</h3>
-        <p>Speed up repetitive applications across LinkedIn, Greenhouse, Ashby, Workday, and company career portals.</p>
-        <ul>
-          <li>Local resume upload (PDF/DOCX) &amp; field extraction</li>
-          <li>Saves name, email, phone, LinkedIn, GitHub &amp; portfolio</li>
-          <li>Populates salary expectations, notice period &amp; cover letter</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>2. Online &amp; Service Centre Operators</h3>
-        <p>Built for digital service centres handling high-volume registrations and citizen/student portal forms.</p>
-        <ul>
-          <li>Store and switch between saved applicant profiles</li>
-          <li>Quick-fill common contact, identity &amp; address fields</li>
-          <li>Cuts down repetitive data-entry time on web portals</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>3. Free Trial &amp; Instant License Activation</h3>
-        <p>Try ApplyFast AI on real forms first with 10 free auto-fills before choosing a paid subscription.</p>
-        <ul>
-          <li>10 lifetime free form auto-fills included</li>
-          <li>Automated license key delivery via email after payment</li>
-          <li>One-click Pro activation inside the extension popup</li>
-        </ul>
-      </div>
-    </section>
-
-    <h2 class="section-title" id="preview">How ApplyFast AI Works</h2>
-    <section class="preview-box">
-      <div>
-        <h3 style="font-size:18px; margin-bottom:8px;">Clean 3-Step Workflow</h3>
-        <p style="color:#cbd5e1; font-size:14px; margin-bottom:10px;">
-          1. Open the ApplyFast AI Chrome extension popup and upload a resume or enter applicant details once.<br />
-          2. Open any supported job application or online registration form.<br />
-          3. Click <strong>Auto-fill this page</strong> to populate matching fields automatically.
+    <div class="grid" id="demo-preview">
+      <section class="card">
+        <h2>Interactive Chrome Extension Demo Preview</h2>
+        <p style="font-size: 14px; color: var(--muted); margin-bottom: 12px;">
+          Reviewers and users can test how the ApplyFast AI Chrome extension auto-populates application fields below:
         </p>
-        <p style="color:#94a3b8; font-size:13px;">
-          Note: All profile data stays in your browser storage unless you choose to clear it.
-        </p>
-      </div>
-      <div class="mock-ui">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <strong>⚡ ApplyFast AI</strong>
-          <span style="background:rgba(56,189,248,0.2);color:#38bdf8;padding:2px 8px;border-radius:999px;font-size:11px;">Free (10/10)</span>
+
+        <label for="fullName">Full Name</label>
+        <input id="fullName" type="text" placeholder="Enter or click Auto-Fill Demo" />
+
+        <label for="email">Email Address</label>
+        <input id="email" type="email" placeholder="Enter or click Auto-Fill Demo" />
+
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="text" placeholder="Enter or click Auto-Fill Demo" />
+
+        <label for="role">Application / Role</label>
+        <input id="role" type="text" placeholder="Enter or click Auto-Fill Demo" />
+
+        <label for="summary">AI-Assisted Application Note</label>
+        <textarea id="summary" placeholder="Click Auto-Fill Demo to preview generated field text"></textarea>
+
+        <div class="links-row">
+          <button type="button" class="btn btn-primary" onclick="fillDemoData()">Run Extension Auto-Fill Demo</button>
+          <button type="button" class="btn btn-secondary" onclick="clearDemoData()">Reset Fields</button>
         </div>
-        <div class="mock-row"><span>📄 Resume (PDF/DOCX)</span><span style="color:#38bdf8;">Parsed Locally</span></div>
-        <div class="mock-row"><span>👤 Applicant Profile</span><span style="color:#34d399;">Saved</span></div>
-        <div class="mock-row"><span>🔑 Pro License Key</span><span style="color:#cbd5e1;">Instant Unlock</span></div>
-      </div>
-    </section>
 
-    <h2 class="section-title" id="pricing">Simple, Transparent Pricing</h2>
-    <section class="grid">
-      <div class="card">
-        <h3>Free Starter</h3>
-        <div class="price">₹0 / $0</div>
-        <p>Evaluate ApplyFast AI on your everyday forms.</p>
+        <div id="demoStatus" class="status-box"></div>
+      </section>
+
+      <aside class="card">
+        <h2>How It Works & Plans</h2>
+        <h3>Extension Capabilities (Beta)</h3>
         <ul>
-          <li>Up to 10 free form auto-fills</li>
-          <li>Local profile storage &amp; resume parsing</li>
-          <li>No credit card required</li>
+          <li>Detects common form inputs on web application pages.</li>
+          <li>Saves reusable applicant profile details locally.</li>
+          <li>Generates structured answers to speed up repetitive applications.</li>
         </ul>
-      </div>
 
-      <div class="card">
-        <h3>Pro Monthly</h3>
-        <div class="price">₹149 / $2 <span style="font-size:13px;color:#94a3b8;">/ month</span></div>
-        <p>Unlimited auto-fills for active job searches or daily centre work.</p>
-        <ul>
-          <li>Unlimited form auto-fills</li>
-          <li>Supports UPI AutoPay, Indian &amp; International Cards</li>
-          <li>Auto-renews monthly; instant license key via email</li>
-        </ul>
-        <a class="btn" href="#contact">Get Monthly Plan</a>
-      </div>
+        <div class="plan-box">
+          <h3>Planned Pro Access (After Verification)</h3>
+          <p style="font-size: 13px; color: var(--muted);">Monthly & Yearly access options for extended usage:</p>
+          <div class="price">₹99 / month <span style="font-size: 13px; font-weight: 400; color: var(--muted);">or ₹999 / year</span></div>
+          <p style="font-size: 12px; color: var(--muted); margin-top: 6px;">
+            Currently in active beta & payment review. Checkout links are configured once payment approval is finalized.
+          </p>
+        </div>
+      </aside>
+    </div>
 
-      <div class="card">
-        <div class="tag-best">BEST VALUE • SAVE ₹289 / $6</div>
-        <h3>Pro Yearly</h3>
-        <div class="price">₹1,499 / $18 <span style="font-size:13px;color:#94a3b8;">/ year</span></div>
-        <p>Full-year unlimited access for heavy form-filling workflows.</p>
-        <ul>
-          <li>Unlimited form auto-fills for 12 months</li>
-          <li>Supports Indian &amp; global payment methods</li>
-          <li>Auto-renews yearly; instant license key via email</li>
-        </ul>
-        <a class="btn" href="#contact">Get Yearly Plan</a>
-      </div>
-    </section>
-
-    <h2 class="section-title" id="policies">Privacy Policy, Terms, Refund &amp; Copyright</h2>
-    <section class="policy-box">
-      <h3>1. Privacy Policy</h3>
-      <p>
-        ApplyFast AI ("we", "our", or "us") is committed to protecting user privacy. Applicant profile information (such as name, email, phone number, links, work history, and cover letter text) and uploaded resume files (PDF/DOCX) are processed locally on your device and saved inside Chrome's extension storage (<code>chrome.storage</code>) solely to auto-fill web forms when initiated by you. We do not sell, rent, or share your personal profile data or resume contents with third parties. When you activate a Pro license key, only the license key is transmitted over HTTPS to our authorized licensing provider to verify subscription validity.
-      </p>
-
-      <h3>2. Terms of Service &amp; Subscription Billing</h3>
-      <p>
-        ApplyFast AI is a digital productivity software tool distributed as a Google Chrome extension. By installing or purchasing a Pro subscription, you agree to use the extension only for lawful, authorized form submissions. Paid Pro plans are billed on a recurring monthly (₹149 / $2) or annual (₹1,499 / $18) schedule through our authorized payment processor and renew automatically unless cancelled prior to the next billing date. Upon successful payment, a unique license key is issued and delivered electronically to your registered email address.
-      </p>
-
-      <h3>3. Refund &amp; Cancellation Policy</h3>
-      <p>
-        Every user receives 10 free form auto-fills to test ApplyFast AI before purchasing a paid subscription. Because Pro plans provide immediate access to a digital software license key upon payment confirmation, completed digital subscription payments are non-refundable except where required by applicable law. You may cancel future recurring renewals at any time before your next renewal date via your billing management link or by emailing support.
-      </p>
-
-      <h3>4. Copyright &amp; Intellectual Property Notice</h3>
-      <p>
-        © 2026 ApplyFast AI (Owned &amp; Operated by Hiralal Ravidas). All rights reserved. The ApplyFast AI name, logo, user interface design, source code, and documentation are protected by applicable copyright and intellectual property laws. Unauthorized copying, redistribution, reverse engineering, or resale of this software or its license keys is strictly prohibited.
-      </p>
-
-      <h3 id="contact">5. Business &amp; Support Contact</h3>
-      <p>
-        <strong>Product Name:</strong> ApplyFast AI (Digital Software / Chrome Extension)<br />
-        <strong>Owner / Developer:</strong> Hiralal Ravidas<br />
-        <strong>Support &amp; Billing Email:</strong> <a class="link" href="mailto:hiralalravidas8252@gmail.com">hiralalravidas8252@gmail.com</a><br />
-        <strong>Location:</strong> Sahibganj, Jharkhand, India<br />
-        <strong>Support Response Time:</strong> Within 24–48 business hours
-      </p>
+    <section class="legal-section" id="info">
+      <h2>Product, Privacy & Terms Summary</h2>
+      <p><strong>Product Status:</strong> ApplyFast AI is a digital software utility (Chrome extension in beta) developed by Hiralal Ravidas.</p>
+      <p><strong>Privacy:</strong> This demo page runs locally in your browser without sending demo inputs to an external database. Extension profile data is intended to remain under user control.</p>
+      <p><strong>Terms & Support:</strong> Provided as a beta software preview. For support or verification inquiries, refer to the repository at <a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">github.com/hiralalapplyfastai/applyfast-ai</a>.</p>
     </section>
 
     <footer>
-      © 2026 ApplyFast AI • Owned &amp; Operated by Hiralal Ravidas • <a class="link" href="#policies">Privacy Policy, Terms, Refund Policy &amp; Copyright</a>
+      <div>© 2026 ApplyFast AI • https://hiralalapplyfastai.github.io/applyfast-ai/</div>
+      <div>
+        <a href="#demo-preview">Demo</a> •
+        <a href="#info">Privacy & Terms</a> •
+        <a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
     </footer>
   </div>
+
+  <script>
+    const DODO_MONTHLY_CHECKOUT_URL = "";
+    const DODO_YEARLY_CHECKOUT_URL = "";
+
+    function fillDemoData() {
+      document.getElementById("fullName").value = "Hiralal Ravidas";
+      document.getElementById("email").value = "hiralal.demo@example.com";
+      document.getElementById("phone").value = "+91 98000 00000";
+      document.getElementById("role").value = "Online Application Form Auto-Fill (Beta)";
+      document.getElementById("summary").value =
+        "Applicant profile ready for quick form completion using ApplyFast AI Chrome extension demo mode.";
+
+      const status = document.getElementById("demoStatus");
+      status.style.display = "block";
+      status.textContent =
+        "Demo active: Sample fields populated to demonstrate ApplyFast AI Chrome extension workflow.";
+    }
+
+    function clearDemoData() {
+      ["fullName", "email", "phone", "role", "summary"].forEach((id) => {
+        document.getElementById(id).value = "";
+      });
+      const status = document.getElementById("demoStatus");
+      status.style.display = "none";
+      status.textContent = "";
+    }
+  </script>
 </body>
 </html>
