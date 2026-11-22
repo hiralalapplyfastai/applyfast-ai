@@ -3,19 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ApplyFast AI — Chrome Extension & Live Demo</title>
-  <meta name="description" content="ApplyFast AI is an AI-powered Chrome extension in beta that helps auto-fill online application forms faster. Try the live web demo preview." />
+  <title>ApplyFast AI — Fill Any Job Form in One Click</title>
+  <meta name="description" content="ApplyFast AI helps fill job application forms faster with local resume parsing, saved profile details, and Monthly ₹149 / $2 or Yearly ₹1,499 / $18 Pro plans." />
   <style>
     :root {
-      --bg: #0b1120;
-      --card: #111827;
-      --card-2: #1e293b;
+      --bg-top: #0b1936;
+      --bg-bottom: #070f21;
+      --panel: #0e1d3d;
+      --panel-2: #132650;
+      --border: rgba(96, 165, 250, 0.25);
       --text: #f8fafc;
-      --muted: #94a3b8;
-      --border: #334155;
-      --accent: #38bdf8;
-      --green: #22c55e;
-      --green-dark: #052e16;
+      --muted: #9fb3d9;
+      --blue: #2563eb;
+      --blue-bright: #3b82f6;
+      --cyan: #38bdf8;
+      --coffee: #e8cfa0;
+      --coffee-text: #3b260c;
     }
 
     * {
@@ -26,289 +29,557 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, #172554 0%, var(--bg) 55%);
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
       color: var(--text);
-      line-height: 1.6;
-      padding: 24px 16px 60px;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 24px 16px 64px;
     }
 
-    .container {
-      max-width: 960px;
+    .wrap {
+      max-width: 1040px;
       margin: 0 auto;
     }
 
-    .badge {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--accent);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
-
-    .hero {
-      background: rgba(17, 24, 39, 0.88);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 16px;
-      margin-bottom: 18px;
-    }
-
-    .links-row {
+    .top-bar {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
       gap: 12px;
-      margin-top: 12px;
+      background: rgba(14, 29, 61, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .brand-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(59, 130, 246, 0.16);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      color: #bfdbfe;
     }
 
     .btn {
-      display: inline-block;
-      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       padding: 10px 16px;
       border-radius: 10px;
-      font-weight: 600;
       font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
       cursor: pointer;
-      border: none;
-      transition: 0.2s ease;
+      border: 1px solid transparent;
+      transition: 0.18s ease;
     }
 
     .btn-primary {
-      background: var(--green);
-      color: var(--green-dark);
+      background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+      color: #ffffff;
+      border-color: rgba(147, 197, 253, 0.35);
     }
 
     .btn-primary:hover {
-      opacity: 0.92;
+      filter: brightness(1.08);
     }
 
-    .btn-secondary {
-      background: var(--card-2);
+    .btn-ghost {
+      background: rgba(19, 38, 80, 0.85);
       color: var(--text);
-      border: 1px solid var(--border);
+      border-color: var(--border);
     }
 
-    .btn-secondary:hover {
-      border-color: var(--accent);
+    .btn-ghost:hover {
+      border-color: var(--cyan);
     }
 
-    .grid {
+    .btn-coffee {
+      background: linear-gradient(180deg, #f3dfb8, var(--coffee));
+      color: var(--coffee-text);
+      font-weight: 700;
+    }
+
+    .grid-main {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 20px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: start;
       margin-bottom: 24px;
     }
 
-    @media (max-width: 780px) {
-      .grid {
+    @media (max-width: 860px) {
+      .grid-main {
         grid-template-columns: 1fr;
-      }
-      h1 {
-        font-size: 26px;
       }
     }
 
     .card {
-      background: rgba(17, 24, 39, 0.9);
+      background: rgba(14, 29, 61, 0.92);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 22px;
+      padding: 20px;
+      margin-bottom: 18px;
     }
 
-    h2 {
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
-
-    h3 {
-      font-size: 16px;
+    .quota-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
       margin-bottom: 8px;
-      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .quota-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+
+    .quota-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #38bdf8, #3b82f6);
+    }
+
+    .section-tag {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .dropzone {
+      border: 1.5px dashed rgba(96, 165, 250, 0.45);
+      background: rgba(9, 19, 42, 0.72);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .dropzone:hover {
+      border-color: var(--cyan);
+    }
+
+    .dropzone-title {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .dropzone-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .check-row input {
+      width: auto;
+    }
+
+    .local-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .tab-link {
+      font-size: 12px;
+      color: var(--cyan);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 560px) {
+      .row-2 {
+        grid-template-columns: 1fr;
+      }
     }
 
     label {
       display: block;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
       margin-top: 10px;
       margin-bottom: 4px;
     }
 
-    input, select, textarea {
+    input {
       width: 100%;
-      padding: 10px 12px;
+      padding: 9px 11px;
       border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #0f172a;
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      background: #081229;
       color: var(--text);
-      font-size: 14px;
-    }
-
-    textarea {
-      min-height: 76px;
-      resize: vertical;
-    }
-
-    .status-box {
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.35);
-      color: #86efac;
       font-size: 13px;
-      display: none;
     }
 
-    ul {
-      padding-left: 18px;
-      color: var(--muted);
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
     }
 
-    li {
-      margin-bottom: 8px;
+    .coffee-full {
+      width: 100%;
+      margin-top: 10px;
     }
 
-    .plan-box {
-      background: #0f172a;
-      border: 1px solid var(--border);
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 560px) {
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .plan-card {
+      position: relative;
+      background: rgba(9, 19, 42, 0.85);
+      border: 1px solid rgba(96, 165, 250, 0.3);
       border-radius: 12px;
       padding: 14px;
-      margin-top: 12px;
+      text-align: center;
+    }
+
+    .plan-card.featured {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
+    }
+
+    .badge-best {
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    .plan-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--cyan);
+      text-transform: uppercase;
     }
 
     .price {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 4px 0;
+      font-size: 20px;
+      font-weight: 800;
+      margin: 6px 0 2px;
     }
 
-    footer {
-      margin-top: 28px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
+    .per {
+      font-size: 12px;
       color: var(--muted);
-      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .plan-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .plan-btn {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: none;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .plan-btn:hover {
+      background: #3b82f6;
+    }
+
+    .benefits {
+      list-style: none;
+      font-size: 12px;
+      color: #cbd5e1;
+      margin: 12px 0;
+    }
+
+    .benefits li {
+      margin-bottom: 7px;
+    }
+
+    .note-center {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 8px 0;
+    }
+
+    .key-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .key-row input {
+      margin-top: 0;
+      flex: 1;
+    }
+
+    .status-toast {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      background: rgba(37, 99, 235, 0.18);
+      border: 1px solid rgba(96, 165, 250, 0.4);
+      color: #dbeafe;
+      display: none;
+    }
+
+    .footer {
+      background: rgba(14, 29, 61, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .legal-section {
-      margin-top: 20px;
-      background: rgba(17, 24, 39, 0.75);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
       font-size: 13px;
       color: var(--muted);
     }
 
-    .legal-section p {
-      margin-bottom: 8px;
+    .footer a {
+      color: var(--cyan);
+      text-decoration: none;
+      margin-left: 12px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <section class="hero">
-      <span class="badge">Beta Version • Chrome Extension Preview</span>
-      <h1>ApplyFast AI</h1>
-      <p class="subtitle">
-        ApplyFast AI is a Chrome extension currently in beta that helps users fill online application forms faster with smart profile fields and AI-assisted responses.
-      </p>
-      <p style="font-size: 14px; color: var(--muted);">
-        Official Page: <strong style="color: var(--text);">https://hiralalapplyfastai.github.io/applyfast-ai/</strong>
-      </p>
-      <div class="links-row">
-        <a class="btn btn-primary" href="#demo-preview">Try Live Extension Demo</a>
-        <a class="btn btn-secondary" href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">View GitHub Repository</a>
+  <div class="wrap">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <div class="brand-title">ApplyFast AI</div>
+          <div class="brand-sub">Fill any job form in one click • Live Demo &amp; Overview</div>
+        </div>
       </div>
-    </section>
+      <div class="pill-row">
+        <span class="pill">Free Tier: 10 / 10 Forms</span>
+        <a class="btn btn-primary" href="#pro-plans">Upgrade to Pro</a>
+        <a class="btn btn-ghost" href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+      </div>
+    </header>
 
-    <div class="grid" id="demo-preview">
-      <section class="card">
-        <h2>Interactive Chrome Extension Demo Preview</h2>
-        <p style="font-size: 14px; color: var(--muted); margin-bottom: 12px;">
-          Reviewers and users can test how the ApplyFast AI Chrome extension auto-populates application fields below:
-        </p>
+    <div class="grid-main">
+      <div>
+        <section class="card">
+          <div class="quota-head">
+            <span>Free forms left</span>
+            <span id="quotaText">10 / 10</span>
+          </div>
+          <div class="quota-bar">
+            <div class="quota-fill" id="quotaBar"></div>
+          </div>
+        </section>
 
-        <label for="fullName">Full Name</label>
-        <input id="fullName" type="text" placeholder="Enter or click Auto-Fill Demo" />
+        <section class="card" id="demo-workspace">
+          <div class="section-tag">Upload Resume</div>
+          <div class="dropzone" onclick="simulateResumeLoad()">
+            <div class="dropzone-title">Upload Resume (PDF/DOCX)</div>
+            <div class="dropzone-sub">Click here to test sample resume auto-parse in demo mode</div>
+          </div>
 
-        <label for="email">Email Address</label>
-        <input id="email" type="email" placeholder="Enter or click Auto-Fill Demo" />
+          <label class="check-row">
+            <input type="checkbox" id="replaceExisting" />
+            <span>Replace fields that already have values</span>
+          </label>
 
-        <label for="phone">Phone Number</label>
-        <input id="phone" type="text" placeholder="Enter or click Auto-Fill Demo" />
+          <p class="local-note">Read on your device. Your file is never uploaded or stored.</p>
+          <a class="tab-link" href="#demo-workspace" onclick="showToast('File picker preview runs directly in this demo tab.')">File picker closes the popup? Open in a tab</a>
 
-        <label for="role">Application / Role</label>
-        <input id="role" type="text" placeholder="Enter or click Auto-Fill Demo" />
+          <div class="section-tag" style="margin-top: 18px;">Personal Details</div>
+          <div class="row-2">
+            <div>
+              <label for="firstName">First name</label>
+              <input id="firstName" type="text" placeholder="Enter first name" />
+            </div>
+            <div>
+              <label for="lastName">Last name</label>
+              <input id="lastName" type="text" placeholder="Enter last name" />
+            </div>
+          </div>
 
-        <label for="summary">AI-Assisted Application Note</label>
-        <textarea id="summary" placeholder="Click Auto-Fill Demo to preview generated field text"></textarea>
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" />
 
-        <div class="links-row">
-          <button type="button" class="btn btn-primary" onclick="fillDemoData()">Run Extension Auto-Fill Demo</button>
-          <button type="button" class="btn btn-secondary" onclick="clearDemoData()">Reset Fields</button>
-        </div>
+          <div class="row-2">
+            <div>
+              <label for="phone">Phone number</label>
+              <input id="phone" type="text" placeholder="+91 98765 43210" />
+            </div>
+            <div>
+              <label for="location">Location / city</label>
+              <input id="location" type="text" placeholder="City, State" />
+            </div>
+          </div>
 
-        <div id="demoStatus" class="status-box"></div>
-      </section>
+          <div class="section-tag" style="margin-top: 18px;">Links</div>
+          <label for="linkedin">LinkedIn profile URL</label>
+          <input id="linkedin" type="text" placeholder="https://linkedin.com/in/yourname" />
 
-      <aside class="card">
-        <h2>How It Works & Plans</h2>
-        <h3>Extension Capabilities (Beta)</h3>
-        <ul>
-          <li>Detects common form inputs on web application pages.</li>
-          <li>Saves reusable applicant profile details locally.</li>
-          <li>Generates structured answers to speed up repetitive applications.</li>
-        </ul>
+          <label for="portfolio">GitHub / portfolio URL</label>
+          <input id="portfolio" type="text" placeholder="https://github.com/yourusername" />
 
-        <div class="plan-box">
-          <h3>Planned Pro Access (After Verification)</h3>
-          <p style="font-size: 13px; color: var(--muted);">Monthly & Yearly access options for extended usage:</p>
-          <div class="price">₹99 / month <span style="font-size: 13px; font-weight: 400; color: var(--muted);">or ₹999 / year</span></div>
-          <p style="font-size: 12px; color: var(--muted); margin-top: 6px;">
-            Currently in active beta & payment review. Checkout links are configured once payment approval is finalized.
+          <div class="action-grid">
+            <button type="button" class="btn btn-ghost" onclick="saveDemoProfile()">Save profile</button>
+            <button type="button" class="btn btn-primary" onclick="runDemoAutofill()">Auto-fill this page</button>
+          </div>
+
+          <button type="button" class="btn btn-coffee coffee-full" onclick="showToast('Support / Buy a Coffee preview: ApplyFast AI demo mode.')">☕ Buy a Coffee</button>
+
+          <div id="demoToast" class="status-toast"></div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="card" id="pro-plans">
+          <div class="section-tag">Pro Plans and License</div>
+          <h2 style="font-size: 20px; margin-bottom: 4px;">Upgrade to Pro</h2>
+          <p style="font-size: 13px; color: var(--muted);">Choose a plan to unlock unlimited auto-fills.</p>
+
+          <div class="plans-grid">
+            <div class="plan-card">
+              <div class="plan-name">Monthly</div>
+              <div class="price">₹149 / $2</div>
+              <div class="per">per month</div>
+              <div class="plan-desc">Auto-pay, renews monthly</div>
+              <button type="button" class="plan-btn" onclick="handlePlanClick('Monthly (₹149 / $2)')">Choose Monthly</button>
+            </div>
+
+            <div class="plan-card featured">
+              <span class="badge-best">BEST VALUE</span>
+              <div class="plan-name">Yearly</div>
+              <div class="price">₹1,499 / $18</div>
+              <div class="per">per year</div>
+              <div class="plan-desc">Save more with annual auto-renew. Save ₹289 / $6</div>
+              <button type="button" class="plan-btn" onclick="handlePlanClick('Yearly (₹1,499 / $18)')">Choose Yearly</button>
+            </div>
+          </div>
+
+          <p class="note-center" style="color: #cbd5e1; font-weight: 600;">Auto-pay via cards, UPI and global checkout.</p>
+
+          <ul class="benefits">
+            <li>✓ Unlimited auto-fills on LinkedIn, Greenhouse, Ashby, Workday, Lever</li>
+            <li>✓ License key delivered automatically by email right after payment</li>
+          </ul>
+
+          <p class="note-center">All purchases are final and non-refundable. Your license key is delivered automatically by email right after payment.</p>
+
+          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(96, 165, 250, 0.2);">
+            <div class="note-center" style="margin-bottom: 6px;">Already paid? Activate your key</div>
+            <label for="licenseKey" style="margin-top: 4px;">Enter Pro License Key</label>
+            <div class="key-row">
+              <input id="licenseKey" type="text" placeholder="Paste the key from your email" />
+              <button type="button" class="btn btn-primary" onclick="activateDemoKey()">Activate Pro</button>
+            </div>
+          </div>
+
+          <div id="proToast" class="status-toast"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-tag">Product Info</div>
+          <p style="font-size: 13px; color: var(--muted);">
+            ApplyFast AI is a Chrome extension designed to help applicants fill job application forms quickly with local profile data and resume-assisted details.
           </p>
-        </div>
+          <p style="font-size: 12px; color: var(--muted); margin-top: 8px;">
+            Website: <strong style="color: var(--text);">https://hiralalapplyfastai.github.io/applyfast-ai/</strong>
+          </p>
+        </section>
       </aside>
     </div>
 
-    <section class="legal-section" id="info">
-      <h2>Product, Privacy & Terms Summary</h2>
-      <p><strong>Product Status:</strong> ApplyFast AI is a digital software utility (Chrome extension in beta) developed by Hiralal Ravidas.</p>
-      <p><strong>Privacy:</strong> This demo page runs locally in your browser without sending demo inputs to an external database. Extension profile data is intended to remain under user control.</p>
-      <p><strong>Terms & Support:</strong> Provided as a beta software preview. For support or verification inquiries, refer to the repository at <a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">github.com/hiralalapplyfastai/applyfast-ai</a>.</p>
-    </section>
-
-    <footer>
+    <footer class="footer">
       <div>© 2026 ApplyFast AI • https://hiralalapplyfastai.github.io/applyfast-ai/</div>
       <div>
-        <a href="#demo-preview">Demo</a> •
-        <a href="#info">Privacy & Terms</a> •
+        <a href="#demo-workspace">Demo</a>
+        <a href="#pro-plans">Pricing</a>
         <a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </footer>
@@ -318,27 +589,65 @@
     const DODO_MONTHLY_CHECKOUT_URL = "";
     const DODO_YEARLY_CHECKOUT_URL = "";
 
-    function fillDemoData() {
-      document.getElementById("fullName").value = "Hiralal Ravidas";
-      document.getElementById("email").value = "hiralal.demo@example.com";
-      document.getElementById("phone").value = "+91 98000 00000";
-      document.getElementById("role").value = "Online Application Form Auto-Fill (Beta)";
-      document.getElementById("summary").value =
-        "Applicant profile ready for quick form completion using ApplyFast AI Chrome extension demo mode.";
+    let freeLeft = 10;
 
-      const status = document.getElementById("demoStatus");
-      status.style.display = "block";
-      status.textContent =
-        "Demo active: Sample fields populated to demonstrate ApplyFast AI Chrome extension workflow.";
+    function showToast(msg, targetId = "demoToast") {
+      const el = document.getElementById(targetId);
+      el.textContent = msg;
+      el.style.display = "block";
     }
 
-    function clearDemoData() {
-      ["fullName", "email", "phone", "role", "summary"].forEach((id) => {
-        document.getElementById(id).value = "";
-      });
-      const status = document.getElementById("demoStatus");
-      status.style.display = "none";
-      status.textContent = "";
+    function fillSampleFields() {
+      if (!document.getElementById("firstName").value) document.getElementById("firstName").value = "Hiralal";
+      if (!document.getElementById("lastName").value) document.getElementById("lastName").value = "Ravidas";
+      if (!document.getElementById("email").value) document.getElementById("email").value = "demo@applyfast.ai";
+      if (!document.getElementById("phone").value) document.getElementById("phone").value = "+91 98765 43210";
+      if (!document.getElementById("location").value) document.getElementById("location").value = "Jharkhand, India";
+      if (!document.getElementById("linkedin").value) document.getElementById("linkedin").value = "https://linkedin.com/in/applyfast-demo";
+      if (!document.getElementById("portfolio").value) document.getElementById("portfolio").value = "https://github.com/hiralalapplyfastai";
+    }
+
+    function simulateResumeLoad() {
+      fillSampleFields();
+      showToast("Demo resume parsed locally on device (no file uploaded).");
+    }
+
+    function saveDemoProfile() {
+      fillSampleFields();
+      showToast("Profile details saved in this browser demo session.");
+    }
+
+    function runDemoAutofill() {
+      fillSampleFields();
+      if (freeLeft > 0) {
+        freeLeft -= 1;
+        document.getElementById("quotaText").textContent = `${freeLeft} / 10`;
+        document.getElementById("quotaBar").style.width = `${(freeLeft / 10) * 100}%`;
+      }
+      const name = `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`.trim();
+      const email = document.getElementById("email").value;
+      showToast(`Demo auto-fill completed for ${name} (${email}).`);
+    }
+
+    function handlePlanClick(planLabel) {
+      if (planLabel.includes("Monthly") && DODO_MONTHLY_CHECKOUT_URL) {
+        window.open(DODO_MONTHLY_CHECKOUT_URL, "_blank", "noopener,noreferrer");
+        return;
+      }
+      if (planLabel.includes("Yearly") && DODO_YEARLY_CHECKOUT_URL) {
+        window.open(DODO_YEARLY_CHECKOUT_URL, "_blank", "noopener,noreferrer");
+        return;
+      }
+      showToast(`${planLabel} selected in ApplyFast AI preview. Checkout link will open once payment setup is finalized.`, "proToast");
+    }
+
+    function activateDemoKey() {
+      const key = document.getElementById("licenseKey").value.trim();
+      if (!key) {
+        showToast("Please enter a Pro license key first.", "proToast");
+        return;
+      }
+      showToast(`License key "${key}" checked in demo preview.`, "proToast");
     }
   </script>
 </body>
