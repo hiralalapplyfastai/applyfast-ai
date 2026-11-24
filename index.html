@@ -1,347 +1,1004 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ApplyFast AI | Fill any job application in one click</title>
-<meta name="description" content="ApplyFast AI is a Chrome extension that fills job application forms in one click from your saved profile or resume. Start free with 10 auto-fills.">
-<meta name="theme-color" content="#05030f">
-<link rel="canonical" href="https://hiralalapplyfastai.github.io/applyfast-ai/">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="ApplyFast AI | Fill any job application in one click">
-<meta property="og:description" content="Chrome extension for job seekers. Auto-fill job applications in one click from your saved profile or resume.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://hiralalapplyfastai.github.io/applyfast-ai/">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ApplyFast AI — Fill Any Job Form in One Click</title>
+  <meta name="description" content="ApplyFast AI helps fill job application forms faster with local resume parsing, saved profile details, and Monthly ₹149 / $2 or Yearly ₹1,499 / $18 Pro plans." />
+  <style>
+    :root {
+      --bg-top: #0b1936;
+      --bg-bottom: #070f21;
+      --panel: #0e1d3d;
+      --panel-2: #132650;
+      --border: rgba(96, 165, 250, 0.25);
+      --text: #f8fafc;
+      --muted: #9fb3d9;
+      --blue: #2563eb;
+      --blue-bright: #3b82f6;
+      --cyan: #38bdf8;
+      --coffee: #e8cfa0;
+      --coffee-text: #3b260c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+      padding: 24px 16px 64px;
+    }
+
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: rgba(14, 29, 61, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .brand-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(59, 130, 246, 0.16);
+      border: 1px solid rgba(96, 165, 250, 0.35);
+      color: #bfdbfe;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.18s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+      color: #ffffff;
+      border-color: rgba(147, 197, 253, 0.35);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-ghost {
+      background: rgba(19, 38, 80, 0.85);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--cyan);
+    }
+
+    .btn-coffee {
+      background: linear-gradient(180deg, #f3dfb8, var(--coffee));
+      color: var(--coffee-text);
+      font-weight: 700;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 860px) {
+      .grid-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: rgba(14, 29, 61, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .quota-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .quota-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+
+    .quota-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #38bdf8, #3b82f6);
+      transition: width 0.25s ease;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .dropzone {
+      border: 1.5px dashed rgba(96, 165, 250, 0.45);
+      background: rgba(9, 19, 42, 0.72);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .dropzone:hover {
+      border-color: var(--cyan);
+    }
+
+    .dropzone-title {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .dropzone-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .file-badge {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #7dd3fc;
+      font-weight: 600;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .check-row input {
+      width: auto;
+    }
+
+    .local-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .helper-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .tab-link {
+      font-size: 12px;
+      color: var(--cyan);
+      font-weight: 600;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 560px) {
+      .row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 9px 11px;
+      border-radius: 8px;
+      border: 1px solid rgba(96, 165, 250, 0.25);
+      background: #081229;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .coffee-full {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 560px) {
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .plan-card {
+      position: relative;
+      background: rgba(9, 19, 42, 0.85);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .plan-card.featured {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25);
+    }
+
+    .badge-best {
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    .plan-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 6px 0 2px;
+    }
+
+    .per {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .plan-desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .plan-btn {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: none;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .plan-btn:hover {
+      background: #3b82f6;
+    }
+
+    .benefits {
+      list-style: none;
+      font-size: 12px;
+      color: #cbd5e1;
+      margin: 12px 0;
+    }
+
+    .benefits li {
+      margin-bottom: 7px;
+    }
+
+    .note-center {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 8px 0;
+    }
+
+    .key-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .key-row input {
+      margin-top: 0;
+      flex: 1;
+    }
+
+    .status-toast {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      background: rgba(37, 99, 235, 0.18);
+      border: 1px solid rgba(96, 165, 250, 0.4);
+      color: #dbeafe;
+      display: none;
+    }
+
+    .meta-list {
+      list-style: none;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .meta-list li {
+      margin-bottom: 6px;
+    }
+
+    .faq-card {
+      background: rgba(14, 29, 61, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .faq-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 780px) {
+      .faq-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .faq-item {
+      background: rgba(9, 19, 42, 0.78);
+      border: 1px solid rgba(96, 165, 250, 0.22);
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .faq-q {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .policies-card {
+      background: rgba(14, 29, 61, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .policies-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 780px) {
+      .policies-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .policy-box {
+      background: rgba(9, 19, 42, 0.78);
+      border: 1px solid rgba(96, 165, 250, 0.22);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .policy-box h3 {
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .policy-box p + p {
+      margin-top: 8px;
+    }
+
+    .policy-box a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    .footer {
+      background: rgba(14, 29, 61, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-
-<nav class="nav" aria-label="Main">
   <div class="wrap">
-    <a class="brand" href="index.html"><img src="favicon.svg" alt="" width="34" height="34"> ApplyFast AI</a>
-    <ul class="nav-links">
-      <li><a href="#demo">Interactive preview</a></li>
-      <li><a href="#how">How it works</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li class="keep"><a class="btn btn-primary btn-sm" href="#pricing">Get Pro</a></li>
-    </ul>
-  </div>
-</nav>
-
-<main id="main">
-  <header class="hero">
-    <div class="wrap">
-      <span class="badge">Chrome Extension</span>
-      <h1>Fill any job application in one click</h1>
-      <p class="lead">ApplyFast AI is a Chrome extension that fills the repetitive parts of job applications (name, contact details, links, experience, notice period and more) from a profile you save once. Upload your resume and it fills your profile for you.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#pricing">Upgrade to Pro</a>
-        <a class="btn btn-ghost" href="#demo">See how it works</a>
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <div class="brand-title">ApplyFast AI</div>
+          <div class="brand-sub">Fill any job form in one click • Live Demo &amp; Overview</div>
+        </div>
       </div>
-      <small>Free to start: 10 auto-fills included. Upgrade anytime for unlimited auto-fills.</small>
-    </div>
-  </header>
+      <div class="pill-row">
+        <span class="pill">Free Tier: 10 / 10 Forms</span>
+        <a class="btn btn-primary" href="#pro-plans">Upgrade to Pro</a>
+        <a class="btn btn-ghost" href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+      </div>
+    </header>
 
-  <section class="block" id="demo" aria-labelledby="demo-h">
-    <div class="wrap">
-      <div class="eyebrow">Interactive preview</div>
-      <h2 class="title" id="demo-h">See it fill a job application</h2>
-      <p class="sub">See how the ApplyFast AI Chrome extension works on real job portals. Press <strong>Test Auto-Fill</strong> to watch the sample application form fill itself from a saved profile.</p>
-
-      <div class="demo">
-        <div class="card ext" aria-label="ApplyFast AI extension popup preview">
-          <div class="ext-head">
-            <span class="b"><img src="favicon.svg" alt="" width="28" height="28"> ApplyFast AI</span>
-            <span class="pill">Free</span>
+    <div class="grid-main">
+      <div>
+        <section class="card">
+          <div class="quota-head">
+            <span>Free forms left</span>
+            <span id="quotaText">10 / 10</span>
           </div>
-          <div class="ext-body">
+          <div class="quota-bar">
+            <div class="quota-fill" id="quotaBar"></div>
+          </div>
+        </section>
+
+        <section class="card" id="demo-workspace">
+          <div class="section-tag">Upload Resume</div>
+          <input type="file" id="resumeFileInput" accept=".pdf,.doc,.docx" style="display:none;" onchange="handleResumeFileChange(event)" />
+          <div class="dropzone" onclick="document.getElementById('resumeFileInput').click()">
+            <div class="dropzone-title">Upload Resume (PDF/DOCX)</div>
+            <div class="dropzone-sub">Click to choose a file locally or load sample demo parse</div>
+            <div class="file-badge" id="resumeFileStatus">No file selected yet</div>
+          </div>
+
+          <label class="check-row">
+            <input type="checkbox" id="replaceExisting" />
+            <span>Replace fields that already have values</span>
+          </label>
+
+          <p class="local-note">Read on your device. Your file is never uploaded or stored.</p>
+          <div class="helper-row">
+            <button type="button" class="tab-link" onclick="simulateResumeLoad()">Load sample resume parse</button>
+            <button type="button" class="tab-link" onclick="resetDemoFields()">Clear fields</button>
+          </div>
+
+          <label for="targetPortal">Target Job Board Preview</label>
+          <select id="targetPortal">
+            <option value="LinkedIn">LinkedIn Easy Apply</option>
+            <option value="Greenhouse">Greenhouse</option>
+            <option value="Ashby">Ashby</option>
+            <option value="Workday">Workday</option>
+            <option value="Lever">Lever</option>
+          </select>
+
+          <div class="section-tag" style="margin-top: 18px;">Personal Details</div>
+          <div class="row-2">
             <div>
-              <div class="usage-row"><span>Free forms left</span><strong id="left">10 / 10</strong></div>
-              <div class="bar"><i id="leftBar"></i></div>
+              <label for="firstName">First name</label>
+              <input id="firstName" type="text" placeholder="Enter first name" />
             </div>
-            <div class="prof" aria-label="Sample saved profile">
-              <div><span>Name</span><span>Aarav Sharma</span></div>
-              <div><span>Email</span><span>aarav.sharma@example.com</span></div>
-              <div><span>Phone</span><span>+91 90000 00000</span></div>
-              <div><span>Role</span><span>Senior Full Stack Developer</span></div>
-              <div><span>Experience</span><span>6 years</span></div>
-              <div><span>Notice period</span><span>30 days</span></div>
+            <div>
+              <label for="lastName">Last name</label>
+              <input id="lastName" type="text" placeholder="Enter last name" />
             </div>
-            <div class="ext-actions">
-              <button class="btn btn-primary" id="runDemo" type="button">Test Auto-Fill</button>
-              <button class="btn btn-ghost" id="resetDemo" type="button">Reset</button>
+          </div>
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+
+          <div class="row-2">
+            <div>
+              <label for="phone">Phone number</label>
+              <input id="phone" type="text" placeholder="+91 98765 43210" />
             </div>
-            <div class="demo-status" id="demoStatus" role="status" aria-live="polite">Sample data only. Nothing is sent anywhere.</div>
+            <div>
+              <label for="location">Location / city</label>
+              <input id="location" type="text" placeholder="City, State" />
+            </div>
+          </div>
+
+          <div class="section-tag" style="margin-top: 18px;">Links</div>
+          <label for="linkedin">LinkedIn profile URL</label>
+          <input id="linkedin" type="text" placeholder="https://linkedin.com/in/yourname" />
+
+          <label for="portfolio">GitHub / portfolio URL</label>
+          <input id="portfolio" type="text" placeholder="https://github.com/yourusername" />
+
+          <div class="action-grid">
+            <button type="button" class="btn btn-ghost" onclick="saveDemoProfile()">Save profile</button>
+            <button type="button" class="btn btn-primary" onclick="runDemoAutofill()">Auto-fill this page</button>
+          </div>
+
+          <button type="button" class="btn btn-coffee coffee-full" onclick="showToast('Support / Buy a Coffee preview: ApplyFast AI demo mode.')">☕ Buy a Coffee</button>
+
+          <div id="demoToast" class="status-toast"></div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="card" id="pro-plans">
+          <div class="section-tag">Pro Plans and License</div>
+          <h2 style="font-size: 20px; margin-bottom: 4px;">Upgrade to Pro</h2>
+          <p style="font-size: 13px; color: var(--muted);">Choose a plan to unlock unlimited auto-fills.</p>
+
+          <div class="plans-grid">
+            <div class="plan-card">
+              <div class="plan-name">Monthly</div>
+              <div class="price">₹149 / $2</div>
+              <div class="per">per month</div>
+              <div class="plan-desc">Auto-pay, renews monthly</div>
+              <button type="button" class="plan-btn" onclick="handlePlanClick('Monthly (₹149 / $2)')">Choose Monthly</button>
+            </div>
+
+            <div class="plan-card featured">
+              <span class="badge-best">BEST VALUE</span>
+              <div class="plan-name">Yearly</div>
+              <div class="price">₹1,499 / $18</div>
+              <div class="per">per year</div>
+              <div class="plan-desc">Save more with annual auto-renew. Save ₹289 / $6</div>
+              <button type="button" class="plan-btn" onclick="handlePlanClick('Yearly (₹1,499 / $18)')">Choose Yearly</button>
+            </div>
+          </div>
+
+          <p class="note-center" style="color: #cbd5e1; font-weight: 600;">Auto-pay via cards, UPI and global checkout.</p>
+
+          <ul class="benefits">
+            <li>✓ Unlimited auto-fills on LinkedIn, Greenhouse, Ashby, Workday, Lever</li>
+            <li>✓ License key delivered automatically by email right after payment</li>
+          </ul>
+
+          <p class="note-center">All purchases are final and non-refundable. Your license key is delivered automatically by email right after payment.</p>
+
+          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(96, 165, 250, 0.2);">
+            <div class="note-center" style="margin-bottom: 6px;">Already paid? Activate your key</div>
+            <label for="licenseKey" style="margin-top: 4px;">Enter Pro License Key</label>
+            <div class="key-row">
+              <input id="licenseKey" type="text" placeholder="Paste the key from your email" />
+              <button type="button" class="btn btn-primary" onclick="activateDemoKey()">Activate Pro</button>
+            </div>
+          </div>
+
+          <div id="proToast" class="status-toast"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-tag">Product &amp; Delivery Info</div>
+          <p style="font-size: 13px; color: var(--muted);">
+            ApplyFast AI is a digital browser extension utility that helps applicants fill job application forms quickly using local resume parsing and saved profile fields.
+          </p>
+          <ul class="meta-list">
+            <li><strong>Delivery:</strong> Digital software &amp; email license key (no physical shipping).</li>
+            <li><strong>Free Trial:</strong> 10 free form auto-fills included.</li>
+            <li><strong>Website:</strong> https://hiralalapplyfastai.github.io/applyfast-ai/</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <section class="faq-card" id="faq">
+      <div class="section-tag">Frequently Asked Questions</div>
+      <h2 style="font-size: 20px;">Everything You Need to Know About ApplyFast AI</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">1. What is ApplyFast AI and how does it work?</div>
+          <div class="faq-a">
+            ApplyFast AI is a Chrome extension that helps job applicants auto-fill online application forms faster using resume parsing and saved personal/profile details. You can test the interactive workflow right here on this demo page.
           </div>
         </div>
 
-        <div class="browser" aria-label="Job application page preview">
-          <div class="browser-bar">
-            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span class="url">careers.example.com/apply/senior-developer</span>
-          </div>
-          <div class="page">
-            <h3>Senior Full Stack Developer</h3>
-            <p class="meta">Example Company · Remote · Application form</p>
-            <form class="form" id="demoForm" autocomplete="off" onsubmit="return false">
-              <div><label for="f-name">Full name</label><input id="f-name" type="text"></div>
-              <div><label for="f-email">Email</label><input id="f-email" type="email"></div>
-              <div><label for="f-phone">Phone number</label><input id="f-phone" type="tel"></div>
-              <div><label for="f-role">Current job title</label><input id="f-role" type="text"></div>
-              <div><label for="f-exp">Years of experience</label><input id="f-exp" type="text"></div>
-              <div><label for="f-city">City</label><input id="f-city" type="text"></div>
-              <div class="full"><label for="f-linkedin">LinkedIn profile</label><input id="f-linkedin" type="url"></div>
-              <div><label for="f-auth">Are you legally authorized to work in India?</label>
-                <select id="f-auth"><option value="">Select...</option><option>Yes</option><option>No</option></select></div>
-              <div><label for="f-spons">Will you require visa sponsorship?</label>
-                <select id="f-spons"><option value="">Select...</option><option>Yes</option><option>No</option></select></div>
-              <div class="full"><label for="f-notice">Notice period</label><input id="f-notice" type="text"></div>
-              <div class="full"><label for="f-answer">Why are you a good fit for this role? <small>(filled from your saved summary)</small></label>
-                <textarea id="f-answer"></textarea></div>
-              <div class="full"><button class="submit" type="button" disabled>Submit application</button></div>
-            </form>
+        <div class="faq-item">
+          <div class="faq-q">2. Which job boards and application portals are supported?</div>
+          <div class="faq-a">
+            Pro users get unlimited auto-fills across major hiring platforms including LinkedIn, Greenhouse, Ashby, Workday, and Lever, along with standard web application forms.
           </div>
         </div>
-      </div>
-      <p class="demo-note"><strong>Note:</strong> this interactive preview runs entirely in your browser with sample data. The ApplyFast AI Chrome extension does the same on the job sites you visit using your saved profile.</p>
-    </div>
-  </section>
 
-  <section class="block" id="how" aria-labelledby="how-h">
-    <div class="wrap">
-      <div class="eyebrow">How it works</div>
-      <h2 class="title" id="how-h">Three steps, no retyping</h2>
-      <div class="grid three steps">
-        <div class="card"><h3>Save your profile</h3><p>Upload your resume (PDF or DOCX) and the extension reads it on your device to fill your profile. You can also type or edit any field yourself.</p></div>
-        <div class="card"><h3>Open any application</h3><p>Go to the job application form on any website. The extension looks at each field's label and name to work out what it is asking for.</p></div>
-        <div class="card"><h3>Click Auto-fill</h3><p>One click fills the matching empty fields, including Yes/No questions like work authorization. You review everything and submit it yourself.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="features" aria-labelledby="feat-h">
-    <div class="wrap">
-      <div class="eyebrow">Features</div>
-      <h2 class="title" id="feat-h">Built for real application forms</h2>
-      <div class="grid three">
-        <div class="card"><div class="icon" aria-hidden="true">1</div><h3>Resume upload</h3><p>Name, email, phone, links, skills and experience are read from your PDF or DOCX locally. The file is never uploaded.</p></div>
-        <div class="card"><div class="icon" aria-hidden="true">2</div><h3>Complete profile</h3><p>Contact details, links, employer, job title, salary expectations, notice period, work authorization, visa sponsorship and a default cover letter.</p></div>
-        <div class="card"><div class="icon" aria-hidden="true">3</div><h3>Works across sites</h3><p>Matches standard form fields on sites such as Greenhouse, Lever, Ashby, Workday and LinkedIn, including forms inside embedded frames.</p></div>
-        <div class="card"><div class="icon" aria-hidden="true">4</div><h3>Never overwrites you</h3><p>Only empty fields are filled. Anything you already typed stays exactly as it is.</p></div>
-        <div class="card"><div class="icon" aria-hidden="true">5</div><h3>Privacy first</h3><p>No account and no ApplyFast servers. Your profile is stored in your own Chrome storage. See the <a href="privacy.html">Privacy Policy</a>.</p></div>
-        <div class="card"><div class="icon" aria-hidden="true">6</div><h3>Free to start</h3><p>10 free auto-fills to try it on real applications. Unlimited with a Pro plan.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="pricing" aria-labelledby="price-h">
-    <div class="wrap">
-      <div class="eyebrow">Pricing</div>
-      <h2 class="title" id="price-h">Simple plans</h2>
-      <p class="sub">Start free with 10 auto-fills, or upgrade to Pro for unlimited applications.</p>
-
-      <div class="price-grid">
-        <div class="card plan">
-          <span class="name">Free</span>
-          <span class="amt">₹0</span>
-          <span class="per">10 auto-fills, lifetime</span>
-          <ul>
-            <li>10 free auto-fills</li>
-            <li>Resume upload and parsing</li>
-            <li>All profile fields</li>
-          </ul>
-          <a class="btn btn-ghost" href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener">Get Free Extension</a>
+        <div class="faq-item">
+          <div class="faq-q">3. Is my resume or personal data uploaded to any server?</div>
+          <div class="faq-a">
+            No. Resume reading and profile details are handled locally in the user’s browser/device without uploading resume files to external databasesor selling user data.
+          </div>
         </div>
-        <div class="card plan">
-          <span class="name">Pro Monthly</span>
-          <span class="amt">₹149 / $2</span>
-          <span class="per">per month, auto-renews monthly</span>
-          <ul>
-            <li>Unlimited auto-fills</li>
-            <li>License key emailed automatically after payment</li>
-            <li>Cancel renewal any time</li>
-          </ul>
-          <a class="btn btn-primary" id="buyMonthly" href="https://checkout.dodopayments.com/buy/pdt_0NsZ5XvQnn8Xo7eqDgzYH?quantity=1" target="_blank" rel="noopener noreferrer">Choose Monthly</a>
+
+        <div class="faq-item">
+          <div class="faq-q">4. What is included in the Free tier vs. Pro plans?</div>
+          <div class="faq-a">
+            New users start with 10 free form auto-fills. Upgrading to Pro unlocks unlimited auto-fills at ₹149 / $2 per month or ₹1,499 / $18 per year (saving ₹289 / $6 annually).
+          </div>
         </div>
-        <div class="card plan best">
-          <span class="ribbon">BEST VALUE</span>
-          <span class="name">Pro Yearly</span>
-          <span class="amt">₹1,499 / $18</span>
-          <span class="per">per year, auto-renews yearly (save ₹289 / $6)</span>
-          <ul>
-            <li>Unlimited auto-fills</li>
-            <li>License key emailed automatically after payment</li>
-            <li>Cancel renewal any time</li>
-          </ul>
-          <a class="btn btn-primary" id="buyYearly" href="https://checkout.dodopayments.com/buy/pdt_0NsZ720qxSawg0cN1yryg?quantity=1" target="_blank" rel="noopener noreferrer">Choose Yearly</a>
+
+        <div class="faq-item">
+          <div class="faq-q">5. How do I receive and activate my Pro license key?</div>
+          <div class="faq-a">
+            After payment completion, your Pro license key is sent to your email. Paste the key into the "Enter Pro License Key" box and click "Activate Pro" to unlock Pro features.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">6. What is the refund and cancellation policy?</div>
+          <div class="faq-a">
+            Because ApplyFast AI provides 10 free forms upfront and instant digital license delivery, all Pro purchases are final and non-refundable. Auto-renewals can be cancelled before the next billing date.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">7. What file formats are supported for resume parsing?</div>
+          <div class="faq-a">
+            ApplyFast AI supports PDF and DOCX resume formats so applicants can extract details quickly and review or edit fields before auto-filling a job application.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">8. Can I overwrite fields that already contain text?</div>
+          <div class="faq-a">
+            Yes. You can check "Replace fields that already have values" if you want existing form values replaced, or leave it unchecked to fill only empty fields safely.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">9. How does the Yearly Pro plan save money?</div>
+          <div class="faq-a">
+            Paying ₹1,499 / $18 once per year gives full-year Pro access and saves ₹289 / $6 compared to paying ₹149 / $2 every month for 12 months.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">10. Is there any physical shipping or hardware involved?</div>
+          <div class="faq-a">
+            No. ApplyFast AI is a 100% digital browser extension and software license product; delivery is electronic via browser extension and email license key.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">11. Why is an interactive web demo provided here?</div>
+          <div class="faq-a">
+            This live web page lets users and reviewers test the ApplyFast AI form auto-fill flow, plan options, FAQs, and legal policies directly in a browser without needing prior installation.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">12. How can I contact support or check updates?</div>
+          <div class="faq-a">
+            You can check project updates, documentation, and support details on the official site at hiralalapplyfastai.github.io/applyfast-ai or via the GitHub repository link below.
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="fineprint">
-        <span><strong>Payments:</strong> checkout is processed securely by Dodo Payments. We never see or store your card details.</span>
-        <span><strong>Subscriptions:</strong> Pro plans renew automatically each month or year until you cancel the renewal.</span>
-        <span><strong>Refunds:</strong> all purchases are final and non-refundable, except where the law requires otherwise. Please try the 10 free auto-fills first. See the <a href="refund.html">Refund Policy</a>.</span>
-        <span>By purchasing you agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.</span>
-      </div>
-    </div>
-  </section>
+    <section class="policies-card" id="legal">
+      <div class="section-tag">Policies, Terms &amp; Copyright</div>
+      <h2 style="font-size: 20px;">Privacy Policy, Terms &amp; Conditions, Refund Policy &amp; Copyright</h2>
 
-  <section class="block" id="faq" aria-labelledby="faq-h">
-    <div class="wrap">
-      <div class="eyebrow">FAQ</div>
-      <h2 class="title" id="faq-h">Questions and answers</h2>
-      <div class="faq">
-        <details><summary>How do I install ApplyFast AI?</summary>
-          <ol>
-            <li>Download the extension package from the <a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener">GitHub repository</a> (Code, then Download ZIP) and unzip it.</li>
-            <li>Open <code>chrome://extensions</code> in Chrome and turn on Developer mode.</li>
-            <li>Click Load unpacked and choose the extension folder.</li>
-            <li>Pin ApplyFast AI to your toolbar, open it, and save your profile or upload your resume.</li>
-          </ol></details>
-        <details><summary>Where is my data stored? Is it safe?</summary>
-          <p>Your profile is stored in your own Chrome storage (which Chrome may sync across your signed-in devices). Resumes are read on your device and are never uploaded. ApplyFast AI has no servers that receive your profile. Details are in the <a href="privacy.html">Privacy Policy</a>.</p></details>
-        <details><summary>Does it write answers with AI?</summary>
-          <p>No. It fills the text you saved, such as your professional summary and cover letter. Field matching is rule-based and runs locally in your browser, so your data is not sent to an AI service.</p></details>
-        <details><summary>Which sites and fields work?</summary>
-          <p>Standard text boxes, text areas, dropdowns and Yes/No radio buttons on most job sites. Search-style custom dropdowns and file upload buttons (such as resume attachments) cannot be filled automatically, so you handle those yourself.</p></details>
-        <details><summary>What counts as one free auto-fill?</summary>
-          <p>One click on Auto-fill that fills at least one field. If nothing matches on a page, no free use is deducted. You get 10 in total.</p></details>
-        <details><summary>How do billing and license keys work?</summary>
-          <p>Choose Monthly or Yearly and pay through the Dodo Payments checkout. Your license key is emailed automatically after payment. Paste it into the extension and click Activate Pro. Plans renew automatically until you cancel the renewal. All purchases are final and non-refundable (see the <a href="refund.html">Refund Policy</a>).</p></details>
-        <details><summary>How can I contact support?</summary>
-          <p>Email us at <a href="mailto:hiralalravidas8252@gmail.com">hiralalravidas8252@gmail.com</a> or visit the <a href="contact.html">Contact page</a>.</p></details>
-      </div>
-    </div>
-  </section>
-</main>
+      <div class="policies-grid">
+        <div class="policy-box" id="privacy">
+          <h3>Privacy Policy</h3>
+          <p>
+            ApplyFast AI processes resume files (PDF/DOCX) and saved applicant profile details locally in your browser. Your resume files and personal form data are never uploaded to external servers or sold to third parties.
+          </p>
+          <p>
+            For Pro subscriptions, payment processing and license key delivery are handled securely through our authorized payment processor.
+          </p>
+        </div>
 
-<footer>
-  <div class="wrap">
-    <div class="foot">
-      <div>
-        <a class="brand" href="index.html"><img src="favicon.svg" alt="" width="34" height="34"> ApplyFast AI</a>
-        <p style="margin-top:10px">Chrome extension that fills job applications in one click from your saved profile or resume.</p>
+        <div class="policy-box" id="terms">
+          <h3>Terms &amp; Conditions</h3>
+          <p>
+            ApplyFast AI is provided as a digital browser productivity tool to assist applicants in filling online job application forms. Users are solely responsible for reviewing all auto-filled fields before submitting any application.
+          </p>
+          <p>
+            Pro plans (Monthly ₹149 / $2 or Yearly ₹1,499 / $18) renew automatically via selected auto-pay methods unless cancelled prior to the next renewal cycle.
+          </p>
+        </div>
+
+        <div class="policy-box" id="refund">
+          <h3>Refund &amp; Cancellation Policy</h3>
+          <p>
+            ApplyFast AI provides 10 free form auto-fills upfront so users can evaluate the product before upgrading. Because Pro license keys are digital goods delivered immediately by email after payment, all Pro purchases are final and non-refundable.
+          </p>
+          <p>
+            You may cancel recurring auto-renewal anytime before the next billing cycle so future charges do not occur.
+          </p>
+        </div>
+
+        <div class="policy-box" id="copyright">
+          <h3>Copyright, Trademarks &amp; Ownership</h3>
+          <p>
+            <strong>Copyright © 2026 ApplyFast AI • Hiralal Ravidas</strong> (Individual Developer, India). All rights reserved. Original software code, branding, and interface design belong to ApplyFast AI.
+          </p>
+          <p>
+            Third-party names (Google Chrome, LinkedIn, Greenhouse, Ashby, Workday, Lever) belong to their respective owners and indicate compatibility only, not affiliation or endorsement.<br />
+            Website: <a href="https://hiralalapplyfastai.github.io/applyfast-ai/">hiralalapplyfastai.github.io/applyfast-ai</a> • Repository: <a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener noreferrer">github.com/hiralalapplyfastai/applyfast-ai</a>
+          </p>
+        </div>
       </div>
-      <div>
-        <h4>Product</h4>
-        <ul>
-          <li><a href="#demo">Interactive preview</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="https://github.com/hiralalapplyfastai/applyfast-ai" target="_blank" rel="noopener">GitHub repository</a></li>
-        </ul>
+    </section>
+
+    <footer class="footer">
+      <div>© 2026 ApplyFast AI • All Rights Reserved • Hiralal Ravidas</div>
+      <div class="footer-links">
+        <a href="#faq">FAQ</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms &amp; Conditions</a>
+        <a href="#refund">Refund Policy</a>
+        <a href="#copyright">Copyright</a>
       </div>
-      <div>
-        <h4>Legal and support</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-          <li><a href="refund.html">Refund Policy</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="copy">© 2026 ApplyFast AI, operated by Hiralal Ravidas. Contact: <a href="mailto:hiralalravidas8252@gmail.com">hiralalravidas8252@gmail.com</a></div>
+    </footer>
   </div>
-</footer>
 
-<script>
-/* ===== LIVE DODO PAYMENTS CHECKOUT LINKS ===== */
-const DODO_MONTHLY_CHECKOUT_URL = "https://checkout.dodopayments.com/buy/pdt_0NsZ5XvQnn8Xo7eqDgzYH?quantity=1";
-const DODO_YEARLY_CHECKOUT_URL = "https://checkout.dodopayments.com/buy/pdt_0NsZ720qxSawg0cN1yryg?quantity=1";
+  <script>
+    const DODO_MONTHLY_CHECKOUT_URL = "";
+    const DODO_YEARLY_CHECKOUT_URL = "";
+    const STORAGE_KEY = "applyfast_demo_profile_v1";
 
-function wireBuy(id, url) {
-  const a = document.getElementById(id);
-  a.href = url;
-  a.target = "_blank";
-  a.rel = "noopener noreferrer";
-}
-wireBuy("buyMonthly", DODO_MONTHLY_CHECKOUT_URL);
-wireBuy("buyYearly", DODO_YEARLY_CHECKOUT_URL);
+    let freeLeft = 10;
 
-/* ===== Interactive preview (sample data only, runs entirely in the browser) ===== */
-const FIELDS = [
-  ["f-name", "Aarav Sharma"],
-  ["f-email", "aarav.sharma@example.com"],
-  ["f-phone", "+91 90000 00000"],
-  ["f-role", "Senior Full Stack Developer"],
-  ["f-exp", "6"],
-  ["f-city", "Bengaluru, Karnataka"],
-  ["f-linkedin", "https://linkedin.com/in/aarav-sharma-demo"],
-  ["f-auth", "Yes"],
-  ["f-spons", "No"],
-  ["f-notice", "30 days"],
-  ["f-answer", "I build and ship reliable web products end to end. Over the last six years I have led React and Node.js projects from idea to launch, and I enjoy working closely with design and product to turn requirements into fast, accessible features."]
-];
-const FREE_TOTAL = 10;
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const $ = (id) => document.getElementById(id);
-let running = false, usesLeft = FREE_TOTAL;
+    const SAMPLE_DATA = {
+      firstName: "Hiralal",
+      lastName: "Ravidas",
+      email: "demo@applyfast.ai",
+      phone: "+91 98765 43210",
+      location: "Jharkhand, India",
+      linkedin: "https://linkedin.com/in/applyfast-demo",
+      portfolio: "https://github.com/hiralalapplyfastai"
+    };
 
-function renderLeft() {
-  $("left").textContent = usesLeft + " / " + FREE_TOTAL;
-  $("leftBar").style.width = (usesLeft / FREE_TOTAL) * 100 + "%";
-}
+    function showToast(msg, targetId = "demoToast") {
+      const el = document.getElementById(targetId);
+      el.textContent = msg;
+      el.style.display = "block";
+    }
 
-async function typeInto(el, text) {
-  if (reduceMotion) { el.value = text; return; }
-  const long = text.length > 60, step = long ? 4 : 1;
-  for (let i = 0; i < text.length; i += step) {
-    el.value = text.slice(0, i + step);
-    await sleep(long ? 8 : 11);
-  }
-}
+    function applyFieldValues(data, forceReplace) {
+      Object.entries(data).forEach(([id, val]) => {
+        const input = document.getElementById(id);
+        if (!input) return;
+        if (forceReplace || !input.value.trim()) {
+          input.value = val;
+        }
+      });
+    }
 
-function clearForm() {
-  FIELDS.forEach(([id]) => {
-    const el = $(id);
-    el.value = "";
-    el.classList.remove("filling", "filled");
-  });
-}
+    function handleResumeFileChange(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      document.getElementById("resumeFileStatus").textContent = `Selected locally: ${file.name}`;
+      const replaceExisting = document.getElementById("replaceExisting").checked;
+      applyFieldValues(SAMPLE_DATA, replaceExisting);
+      const portal = document.getElementById("targetPortal").value;
+      showToast(`Parsed "${file.name}" locally on device for ${portal} (not uploaded).`);
+    }
 
-async function runDemo() {
-  if (running) return;
-  running = true;
-  $("runDemo").disabled = true;
-  clearForm();
-  const status = $("demoStatus");
-  status.className = "demo-status"; status.textContent = "Filling...";
-  const t0 = performance.now();
-  for (const [id, value] of FIELDS) {
-    const el = $(id);
-    el.classList.add("filling");
-    if (el.tagName === "SELECT") { await sleep(reduceMotion ? 0 : 220); el.value = value; }
-    else await typeInto(el, value);
-    el.dispatchEvent(new Event("input", { bubbles: true }));
-    el.dispatchEvent(new Event("change", { bubbles: true }));
-    el.classList.remove("filling"); el.classList.add("filled");
-    await sleep(reduceMotion ? 0 : 70);
-  }
-  if (usesLeft > 0) usesLeft--;
-  renderLeft();
-  const secs = ((performance.now() - t0) / 1000).toFixed(1);
-  status.className = "demo-status ok";
-  status.textContent = "Filled " + FIELDS.length + " fields in " + secs + "s. Sample data only.";
-  running = false;
-  $("runDemo").disabled = false;
-}
+    function simulateResumeLoad() {
+      const replaceExisting = document.getElementById("replaceExisting").checked;
+      applyFieldValues(SAMPLE_DATA, replaceExisting);
+      document.getElementById("resumeFileStatus").textContent = "Sample resume loaded locally (sample-resume.pdf)";
+      const portal = document.getElementById("targetPortal").value;
+      showToast(`Demo resume parsed locally on device for ${portal} (no file uploaded).`);
+    }
 
-function resetDemo() {
-  if (running) return;
-  clearForm();
-  usesLeft = FREE_TOTAL;
-  renderLeft();
-  $("demoStatus").className = "demo-status";
-  $("demoStatus").textContent = "Sample data only. Nothing is sent anywhere.";
-}
+    function resetDemoFields() {
+      Object.keys(SAMPLE_DATA).forEach((id) => {
+        const input = document.getElementById(id);
+        if (input) input.value = "";
+      });
+      document.getElementById("resumeFileInput").value = "";
+      document.getElementById("resumeFileStatus").textContent = "No file selected yet";
+      sessionStorage.removeItem(STORAGE_KEY);
+      showToast("Demo fields cleared.");
+    }
 
-$("runDemo").addEventListener("click", runDemo);
-$("resetDemo").addEventListener("click", resetDemo);
-renderLeft();
-</script>
+    function saveDemoProfile() {
+      const profile = {
+        firstName: document.getElementById("firstName").value.trim(),
+        lastName: document.getElementById("lastName").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        location: document.getElementById("location").value.trim(),
+        linkedin: document.getElementById("linkedin").value.trim(),
+        portfolio: document.getElementById("portfolio").value.trim()
+      };
+      if (!profile.firstName && !profile.email) {
+        applyFieldValues(SAMPLE_DATA, true);
+      }
+      const toSave = {
+        firstName: document.getElementById("firstName").value.trim(),
+        lastName: document.getElementById("lastName").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        location: document.getElementById("location").value.trim(),
+        linkedin: document.getElementById("linkedin").value.trim(),
+        portfolio: document.getElementById("portfolio").value.trim()
+      };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+      showToast("Profile details saved in this browser session.");
+    }
+
+    function runDemoAutofill() {
+      const replaceExisting = document.getElementById("replaceExisting").checked;
+      applyFieldValues(SAMPLE_DATA, replaceExisting);
+      if (freeLeft > 0) {
+        freeLeft -= 1;
+        document.getElementById("quotaText").textContent = `${freeLeft} / 10`;
+        document.getElementById("quotaBar").style.width = `${(freeLeft / 10) * 100}%`;
+      }
+      const portal = document.getElementById("targetPortal").value;
+      const name = `${document.getElementById("firstName").value} ${document.getElementById("lastName").value}`.trim();
+      const email = document.getElementById("email").value;
+      showToast(`Demo auto-fill completed on ${portal} for ${name} (${email}).`);
+    }
+
+    function handlePlanClick(planLabel) {
+      if (planLabel.includes("Monthly") && DODO_MONTHLY_CHECKOUT_URL) {
+        window.open(DODO_MONTHLY_CHECKOUT_URL, "_blank", "noopener,noreferrer");
+        return;
+      }
+      if (planLabel.includes("Yearly") && DODO_YEARLY_CHECKOUT_URL) {
+        window.open(DODO_YEARLY_CHECKOUT_URL, "_blank", "noopener,noreferrer");
+        return;
+      }
+      showToast(`${planLabel} selected in ApplyFast AI preview. Checkout link will open once payment setup is finalized.`, "proToast");
+    }
+
+    function activateDemoKey() {
+      const key = document.getElementById("licenseKey").value.trim();
+      if (!key) {
+        showToast("Please enter a Pro license key first.", "proToast");
+        return;
+      }
+      showToast(`License key "${key}" checked in demo preview.`, "proToast");
+    }
+
+    (function restoreSavedProfile() {
+      try {
+        const raw = sessionStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        applyFieldValues(parsed, true);
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>
